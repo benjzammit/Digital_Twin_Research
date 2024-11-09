@@ -9,9 +9,7 @@ import json
 client = OpenAI(
     api_key= st.secrets["api_keys"]["OPENAI_API_KEY"]
     )
-if not openai.api_key:
-    st.error("OpenAI API key not found. Please add it to Streamlit secrets.")
-    st.stop()
+
 
 # Helper function to generate feedback and perform sentiment analysis
 def generate_digital_twin_feedback(persona, testing_material):
