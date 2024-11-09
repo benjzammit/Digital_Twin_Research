@@ -2,9 +2,10 @@ import streamlit as st
 import openai
 from io import BytesIO
 from PIL import Image
-from openai import OpenAI
 import json
 import os
+from openai import OpenAI
+
 
 # Load OpenAI API key from Streamlit secrets
 client = OpenAI(
@@ -38,20 +39,22 @@ def format_persona_section(section_title, section_data):
 def generate_digital_twin_feedback(persona_description, testing_material):
     # Construct the prompt
     prompt = (
-        f"You are a digital twin of the following customer persona:\n\n"
+        f"As a digital twin of the following customer persona:\n\n"
         f"{persona_description}\n"
-        f"Provide detailed feedback on the following material:\n\n"
+        f"Provide 3-5 critical, actionable insights on the following material. "
+        f"Focus on how it meets or fails to meet the persona's needs and preferences. "
+        f"Present your feedback in bullet points:\n\n"
         f"{testing_material}"
     )
     try:
         # Generate feedback
-        response = client.chat.completions.create(
-            model="gpt-4o",  # Use "gpt-4" if you have access; else use "gpt-3.5-turbo"
+        response =  client.chat.completions.create(
+            model="gpt-4",  # Use "gpt-4" if you have access; else use "gpt-3.5-turbo"
             messages=[
                 {"role": "system", "content": "You are a customer digital twin providing realistic feedback."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=600,
+            max_tokens=250,  # Reduced to limit output length
             temperature=0.7,
         )
         feedback = response.choices[0].message.content.strip()
@@ -79,6 +82,15 @@ def generate_digital_twin_feedback(persona_description, testing_material):
     except Exception as e:
         error_message = f"An error occurred: {str(e)}"
         return error_message, None
+
+# Function to get sentiment icon
+def sentiment_icon(sentiment):
+    if sentiment.lower() == 'positive':
+        return '🟢'
+    elif sentiment.lower() == 'negative':
+        return '🔴'
+    else:
+        return '🟡'
 
 # Custom CSS for modern styling
 st.markdown("""
@@ -201,21 +213,21 @@ personas_list = [persona['title'] for persona in personas_data]
 personas_selected = st.sidebar.multiselect(
     "Choose personas for feedback",
     personas_list,
-    default=[personas_list[0]]  # Default to the first persona
+    default=[personas_list[0]],  # Default to the first persona
+    help="Search and select personas"
 )
 
-# Sidebar - Persona Descriptions
+# Sidebar - Persona Descriptions using expanders
 st.sidebar.markdown("### Persona Details")
 for title in personas_selected:
     persona = personas_dict[title]
-    st.sidebar.markdown(f"**{persona['name']}, {persona['age']}**")
-    st.sidebar.markdown(f"*{persona['occupation']}*")
-    st.sidebar.markdown(f"*{persona['description']}*")
-    if persona.get('image'):
-        if os.path.exists(persona['image']):
-            st.sidebar.image(persona['image'], width=100)
-        else:
-            st.sidebar.write("Image not found.")
+    with st.sidebar.expander(f"{persona['name']}, {persona['age']} - {persona['occupation']}"):
+        st.write(persona['description'])
+        if persona.get('image'):
+            if os.path.exists(persona['image']):
+                st.image(persona['image'], width=100)
+            else:
+                st.write("Image not found.")
 
 # Generate Feedback Button in Sidebar
 if st.sidebar.button("Generate Feedback", key="generate"):
@@ -224,18 +236,6 @@ if st.sidebar.button("Generate Feedback", key="generate"):
     elif not personas_selected:
         st.error("Please select at least one digital twin persona to generate feedback.")
     else:
-        st.markdown("## 📋 Feedback Summary")
-        
-        # Construct the testing material
-        if testing_material and creative:
-            material_for_feedback = f"{testing_material}\n\nPlease also consider the following image."
-        elif testing_material:
-            material_for_feedback = testing_material
-        elif creative:
-            material_for_feedback = "Please provide feedback on the following image."
-        else:
-            material_for_feedback = "No testing material provided."
-        
         # Initialize feedback dictionary
         st.session_state['feedback_dict'] = {}
 
@@ -274,10 +274,9 @@ if st.sidebar.button("Generate Feedback", key="generate"):
             for section_title, section_data in sections:
                 persona_description += format_persona_section(section_title, section_data)
             
-            # Limit the total tokens in the prompt to avoid exceeding the model's context window
-            # Adjust the max_tokens parameter and consider truncating the persona_description if necessary
+            # Generate feedback
             with st.spinner(f"Generating feedback from {persona['name']}..."):
-                feedback, sentiment_data = generate_digital_twin_feedback(persona_description, material_for_feedback)
+                feedback, sentiment_data = generate_digital_twin_feedback(persona_description, testing_material)
                 if sentiment_data:
                     sentiment = sentiment_data.get("sentiment", "Neutral")
                     confidence = sentiment_data.get("confidence", "N/A")
@@ -295,70 +294,56 @@ if st.sidebar.button("Generate Feedback", key="generate"):
                         "confidence": "N/A"
                     }
                     all_feedbacks.append(feedback)
+        
+        # Create tabs for output
+        tab1, tab2 = st.tabs(["📊 Overall Analysis", "📝 Individual Feedback"])
 
-        # Analyze all feedbacks to find common trends
-        st.markdown("### 📊 Overall Analysis")
-        combined_feedback = "\n\n".join(all_feedbacks)
-        try:
-            analysis_prompt = (
-                "Analyze the following feedbacks from different personas and summarize the common trends, themes, "
-                "and overall sentiment. Provide actionable insights.\n\nFeedbacks:\n"
-                f"{combined_feedback}"
-            )
-            analysis_response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": "You are an analysis assistant that provides summaries and insights."},
-                    {"role": "user", "content": analysis_prompt}
-                ],
-                max_tokens=300,
-                temperature=0.7,
-            )
-            overall_analysis = analysis_response.choices[0].message.content.strip()
-            st.markdown(f"<div class='feedback-box'>{overall_analysis}</div>", unsafe_allow_html=True)
-        except Exception as e:
-            st.error(f"An error occurred during overall analysis: {str(e)}")
+        with tab1:
+            st.markdown("## 📊 Overall Analysis")
+            combined_feedback = "\n\n".join(all_feedbacks)
+            try:
+                analysis_prompt = (
+                    "Analyze the following feedbacks from different personas and summarize the common trends, themes, "
+                    "and overall sentiment. Provide actionable insights in bullet points:\n\nFeedbacks:\n"
+                    f"{combined_feedback}"
+                )
+                analysis_response = client.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are an analysis assistant that provides summaries and insights."},
+                        {"role": "user", "content": analysis_prompt}
+                    ],
+                    max_tokens=300,
+                    temperature=0.7,
+                )
+                overall_analysis = analysis_response.choices[0].message.content.strip()
+                st.markdown(f"<div class='feedback-box'>{overall_analysis}</div>", unsafe_allow_html=True)
+            except Exception as e:
+                st.error(f"An error occurred during overall analysis: {str(e)}")
 
-        # Display individual feedbacks
-        st.markdown("### 📝 Individual Feedback")
-        for title in personas_selected:
-            persona = personas_dict[title]
-            st.markdown(f"#### Feedback from {persona['name']}")
-            data = st.session_state['feedback_dict'][title]
-            feedback = data['feedback']
-            sentiment = data['sentiment']
-            confidence = data['confidence']
-            
-            # Determine sentiment class for styling
-            sentiment_class = "neutral"
-            if sentiment.lower() == "positive":
-                sentiment_class = "positive"
-            elif sentiment.lower() == "negative":
-                sentiment_class = "negative"
-            
-            sentiment_label = f"Sentiment: <span class='sentiment-label {sentiment_class}'>{sentiment} ({confidence})</span>"
-            st.markdown(sentiment_label, unsafe_allow_html=True)
-            st.markdown(f"<div class='feedback-box'>{feedback}</div>", unsafe_allow_html=True)
-
+        with tab2:
+            st.markdown("## 📝 Individual Feedback")
+            for title in personas_selected:
+                persona = personas_dict[title]
+                data = st.session_state['feedback_dict'][title]
+                feedback = data['feedback']
+                sentiment = data['sentiment']
+                confidence = data['confidence']
+                
+                icon = sentiment_icon(sentiment)
+                with st.expander(f"{icon} Feedback from {persona['name']} ({sentiment} - {confidence})"):
+                    st.markdown(feedback)
+                    # Download option for each persona's feedback
+                    feedback_file = BytesIO()
+                    feedback_file.write(feedback.encode())
+                    feedback_file.seek(0)
+                    st.download_button(
+                        label=f"Download {persona['name']}'s Feedback",
+                        data=feedback_file,
+                        file_name=f"{persona['name']}_feedback.txt",
+                        mime="text/plain",
+                    )
         st.success("Feedback generated successfully!")
-
-        # Download option for feedback
-        if st.session_state['feedback_dict']:
-            feedback_text = "\n\n".join([
-                f"Feedback from {persona['name']} ({title}):\n"
-                f"Sentiment: {data['sentiment']} ({data['confidence']})\n"
-                f"{data['feedback']}"
-                for title, data in st.session_state['feedback_dict'].items()
-            ])
-            feedback_file = BytesIO()
-            feedback_file.write(feedback_text.encode())
-            feedback_file.seek(0)
-            st.download_button(
-                label="Download Feedback as .txt",
-                data=feedback_file,
-                file_name="reflective_feedback.txt",
-                mime="text/plain",
-            )
 
 # Main Section - Display the Testing Material or Creative Asset if uploaded
 st.markdown("## 👁️ Testing Material Preview")
