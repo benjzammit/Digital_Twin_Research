@@ -1,87 +1,422 @@
 [
-    {
-      "id": "persona_software_engineer_malta",
-      "name": "Matthew Borg",
-      "age": 30,
-      "title": "Tech-Savvy Software Engineer",
-      "gender": "Male",
-      "location": "Northern Harbour District, Malta",
-      "marital_status": "Single",
-      "education": "Bachelor's degree in Computer Science",
-      "occupation": "Software Engineer",
-      "income": "€30,000 - €39,999",
-      "ethnicity": "Maltese",
-      "religion": "Roman Catholic",
-      "description": "Matthew is a tech-savvy software engineer who embraces new technologies and values high-quality products and excellent customer service.",
-      "personality_traits": {
-        "openness": "High",
-        "conscientiousness": "High",
-        "extraversion": "High",
-        "agreeableness": "High",
-        "neuroticism": "Low"
+  {
+    "id": "persona_software_engineer_malta",
+    "name": "Matthew Borg",
+    "age": 30,
+    "title": "Tech-Savvy Software Engineer",
+    "gender": "Male",
+    "location": "Northern Harbour District, Malta",
+    "marital_status": "Single",
+    "education": "Bachelor's degree in Computer Science",
+    "occupation": "Software Engineer",
+    "income": "€30,000 - €39,999",
+    "ethnicity": "Maltese",
+    "religion": "Roman Catholic",
+    "description": "Matthew is a tech-savvy software engineer who embraces new technologies and values high-quality products and excellent customer service.",
+    "personality_traits": {
+      "openness": "High",
+      "conscientiousness": "High",
+      "extraversion": "High",
+      "agreeableness": "High",
+      "neuroticism": "Low"
+    },
+    "values_and_beliefs": {
+      "environmental_concern": 4,
+      "importance_of_sustainability": "Very important",
+      "social_responsibility": "Believes businesses should contribute positively to society",
+      "political_orientation": "Moderate",
+      "cultural_traditions_importance": "Moderately important",
+      "value_priorities": ["Family", "Career", "Health", "Community", "Personal growth"]
+    },
+    "behavioral_patterns": {
+      "daily_routine": "Works as a software engineer, goes to the gym or meets friends after work",
+      "decision_making_style": "Conducts thorough research",
+      "purchasing_habits": "Always researches products online before purchasing",
+      "brand_loyalty": "Loyal to brands with high quality and excellent customer service",
+      "adoption_of_new_products": "Very willing"
+    },
+    "preferences_and_interests": {
+      "hobbies": ["Football", "Traveling", "Music", "Socializing with friends and family"],
+      "media_consumption": ["Online news sites", "Social media platforms", "Streaming services"],
+      "favorite_social_media": ["Facebook", "LinkedIn", "YouTube"],
+      "travel_frequency": "Multiple times a year",
+      "cuisine_preferences": ["Maltese", "Italian", "Mediterranean", "Mexican"]
+    },
+    "emotional_responses": {
+      "stress_response": ["Remains calm and focused", "Engages in stress-relief activities like exercise"],
+      "conflict_resolution": "Seeks a compromise",
+      "emotional_expression": "Somewhat comfortable",
+      "recent_positive_experience": "Organized a surprise birthday party for a friend"
+    },
+    "communication_style": {
+      "preferred_channels": ["Face-to-face", "Phone calls", "Text messaging", "Email"],
+      "information_preference": ["Detailed explanations", "Visual representations"],
+      "languages": ["Maltese", "English", "Italian"],
+      "public_speaking_confidence": "Moderately confident"
+    },
+    "consumer_behavior": {
+      "shopping_preferences": ["Online retailers", "Independent stores", "Shopping malls"],
+      "purchase_factors": {
+        "price": 4,
+        "quality": 5,
+        "brand_reputation": 4,
+        "recommendations": 3,
+        "advertising": 2,
+        "convenience": 5,
+        "sustainability": 3,
+        "customer_service": 4
       },
-      "values_and_beliefs": {
-        "environmental_concern": 4,
-        "importance_of_sustainability": "Very important",
-        "social_responsibility": "Believes businesses should contribute positively to society",
-        "political_orientation": "Moderate",
-        "cultural_traditions_importance": "Moderately important",
-        "value_priorities": ["Family", "Career", "Health", "Community", "Personal growth"]
+      "online_shopping_frequency": "Frequently",
+      "use_of_reviews": "Always",
+      "impulse_buying": "Sometimes"
+    },
+    "technology_usage": {
+      "devices_owned": ["Smartphone", "Laptop", "Smartwatch"],
+      "internet_usage_hours": "4-6 hours",
+      "adoption_of_technology": "Early adopter",
+      "primary_online_activities": ["Work or study", "Entertainment", "Social networking", "News and information"]
+    },
+    "additional_insights": {
+      "exceptional_experience": "Purchased wireless headphones with outstanding quality and customer service",
+      "improvement_suggestions": "Better online shopping experiences, faster delivery, localized support, focus on quality and competitive prices",
+      "future_trends": "Advancements in technology like AI and smart home devices; increased importance of sustainability"
+    },
+    "image": "images/Matthew-Borg.png"
+  },
+  {
+    "id": "persona_small_business_owner_malta",
+    "name": "Anna Grech",
+    "age": 45,
+    "title": "Eco-Conscious Small Business Owner",
+    "gender": "Female",
+    "location": "Southern Harbour District, Malta",
+    "marital_status": "Married",
+    "education": "Bachelor's degree in Business Administration",
+    "occupation": "Owner of a Local Artisan Shop",
+    "income": "€40,000 - €49,999",
+    "ethnicity": "Maltese",
+    "religion": "Roman Catholic",
+    "description": "Anna is a small business owner passionate about Maltese culture and sustainability, valuing community engagement and ethical practices.",
+    "personality_traits": {
+      "openness": "High",
+      "conscientiousness": "High",
+      "extraversion": "Moderate",
+      "agreeableness": "High",
+      "neuroticism": "Low"
+    },
+    "values_and_beliefs": {
+      "environmental_concern": 5,
+      "importance_of_sustainability": "Extremely important",
+      "social_responsibility": "Believes in giving back to the community and practicing ethical business",
+      "political_orientation": "Liberal",
+      "cultural_traditions_importance": "Extremely important",
+      "value_priorities": ["Family", "Community", "Health", "Personal growth", "Career"]
+    },
+    "behavioral_patterns": {
+      "daily_routine": "Manages her artisan shop, attends local markets, spends evenings with family",
+      "decision_making_style": "Considers past experiences and ethical implications",
+      "purchasing_habits": "Supports local businesses and sustainable products",
+      "brand_loyalty": "Loyal to brands that align with her values",
+      "adoption_of_new_products": "Moderately willing"
+    },
+    "preferences_and_interests": {
+      "hobbies": ["Cooking/Baking", "Arts and crafts", "Outdoor activities", "Volunteering"],
+      "media_consumption": ["Local newspapers", "Community radio", "Social media platforms"],
+      "favorite_social_media": ["Facebook", "Instagram", "Pinterest"],
+      "travel_frequency": "Once every few years",
+      "cuisine_preferences": ["Maltese", "Italian", "Mediterranean", "Vegetarian/Vegan"]
+    },
+    "emotional_responses": {
+      "stress_response": ["Seeks support from family", "Engages in relaxation activities like gardening"],
+      "conflict_resolution": "Seeks a compromise and open communication",
+      "emotional_expression": "Very comfortable",
+      "recent_positive_experience": "Organized a community fundraiser for a local charity"
+    },
+    "communication_style": {
+      "preferred_channels": ["Face-to-face", "Phone calls", "Social media messaging"],
+      "information_preference": ["Detailed explanations", "Interactive discussions"],
+      "languages": ["Maltese", "English"],
+      "public_speaking_confidence": "Very confident"
+    },
+    "consumer_behavior": {
+      "shopping_preferences": ["Local markets", "Independent stores"],
+      "purchase_factors": {
+        "price": 3,
+        "quality": 5,
+        "brand_reputation": 5,
+        "recommendations": 4,
+        "advertising": 2,
+        "convenience": 4,
+        "sustainability": 5,
+        "customer_service": 5
       },
-      "behavioral_patterns": {
-        "daily_routine": "Works as a software engineer, goes to the gym or meets friends after work",
-        "decision_making_style": "Conducts thorough research",
-        "purchasing_habits": "Always researches products online before purchasing",
-        "brand_loyalty": "Loyal to brands with high quality and excellent customer service",
-        "adoption_of_new_products": "Very willing"
+      "online_shopping_frequency": "Occasionally",
+      "use_of_reviews": "Often",
+      "impulse_buying": "Rarely"
+    },
+    "technology_usage": {
+      "devices_owned": ["Smartphone", "Tablet", "Laptop"],
+      "internet_usage_hours": "3-4 hours",
+      "adoption_of_technology": "Early majority",
+      "primary_online_activities": ["Social networking", "Managing online store", "News and information"]
+    },
+    "additional_insights": {
+      "exceptional_experience": "Received excellent customer service from a sustainable brand",
+      "improvement_suggestions": "More businesses should focus on ethical practices and community engagement",
+      "future_trends": "Increase in demand for sustainable and locally produced goods"
+    },
+    "image": "images/Anna-Grech.png"
+  },
+  {
+    "id": "persona_university_student_malta",
+    "name": "Daniel Attard",
+    "age": 21,
+    "title": "Social Media Enthusiast Student",
+    "gender": "Male",
+    "location": "Western District, Malta",
+    "marital_status": "Single",
+    "education": "Currently pursuing Bachelor's degree in Marketing",
+    "occupation": "University Student",
+    "income": "Less than €10,000",
+    "ethnicity": "Maltese",
+    "religion": "No religious affiliation",
+    "description": "Daniel is a university student who is highly active on social media, values experiences over possessions, and is influenced by peers.",
+    "personality_traits": {
+      "openness": "High",
+      "conscientiousness": "Moderate",
+      "extraversion": "High",
+      "agreeableness": "Moderate",
+      "neuroticism": "Moderate"
+    },
+    "values_and_beliefs": {
+      "environmental_concern": 3,
+      "importance_of_sustainability": "Moderately important",
+      "social_responsibility": "Believes in social justice and equality",
+      "political_orientation": "Very liberal",
+      "cultural_traditions_importance": "Slightly important",
+      "value_priorities": ["Personal growth", "Career", "Community", "Health", "Family"]
+    },
+    "behavioral_patterns": {
+      "daily_routine": "Attends lectures, spends time on social media, hangs out with friends",
+      "decision_making_style": "Influenced by peers and trends",
+      "purchasing_habits": "Often purchases based on social media influence",
+      "brand_loyalty": "Not particularly loyal; likes to try new brands",
+      "adoption_of_new_products": "Extremely willing"
+    },
+    "preferences_and_interests": {
+      "hobbies": ["Gaming", "Traveling", "Music", "Socializing with friends"],
+      "media_consumption": ["Streaming services", "Social media platforms", "Podcasts"],
+      "favorite_social_media": ["Instagram", "TikTok", "YouTube"],
+      "travel_frequency": "Once a year",
+      "cuisine_preferences": ["American", "Asian", "Italian", "Fast food"]
+    },
+    "emotional_responses": {
+      "stress_response": ["Feels anxious", "Engages in gaming to relieve stress"],
+      "conflict_resolution": "Avoids confrontation",
+      "emotional_expression": "Somewhat uncomfortable",
+      "recent_positive_experience": "Attended a live concert of a favorite band"
+    },
+    "communication_style": {
+      "preferred_channels": ["Text messaging", "Social media messaging", "Video conferencing"],
+      "information_preference": ["Visual representations", "Summarized key points"],
+      "languages": ["Maltese", "English"],
+      "public_speaking_confidence": "Slightly confident"
+    },
+    "consumer_behavior": {
+      "shopping_preferences": ["Online retailers", "International retailers", "Shopping malls"],
+      "purchase_factors": {
+        "price": 5,
+        "quality": 3,
+        "brand_reputation": 3,
+        "recommendations": 5,
+        "advertising": 4,
+        "convenience": 5,
+        "sustainability": 2,
+        "customer_service": 3
       },
-      "preferences_and_interests": {
-        "hobbies": ["Football", "Traveling", "Music", "Socializing with friends and family"],
-        "media_consumption": ["Online news sites", "Social media platforms", "Streaming services"],
-        "favorite_social_media": ["Facebook", "LinkedIn", "YouTube"],
-        "travel_frequency": "Multiple times a year",
-        "cuisine_preferences": ["Maltese", "Italian", "Mediterranean", "Mexican"]
+      "online_shopping_frequency": "Frequently",
+      "use_of_reviews": "Often",
+      "impulse_buying": "Often"
+    },
+    "technology_usage": {
+      "devices_owned": ["Smartphone", "Laptop", "Gaming console"],
+      "internet_usage_hours": "9+ hours",
+      "adoption_of_technology": "Innovator",
+      "primary_online_activities": ["Social networking", "Gaming", "Streaming videos", "Online shopping"]
+    },
+    "additional_insights": {
+      "exceptional_experience": "Used an app that seamlessly integrated social networking and gaming",
+      "improvement_suggestions": "Brands should engage more on social media platforms and create interactive content",
+      "future_trends": "Rise of augmented reality in social media and gaming"
+    },
+    "image": "images/Daniel-Attard.png"
+  },
+  {
+    "id": "persona_retired_teacher_malta",
+    "name": "Maria Falzon",
+    "age": 68,
+    "title": "Community-Oriented Retired Teacher",
+    "gender": "Female",
+    "location": "Gozo and Comino",
+    "marital_status": "Widowed",
+    "education": "Master's degree in Education",
+    "occupation": "Retired Teacher",
+    "income": "€20,000 - €29,999",
+    "ethnicity": "Maltese",
+    "religion": "Roman Catholic",
+    "description": "Maria is a retired teacher who values tradition, community, and family. She is less tech-oriented but open to learning.",
+    "personality_traits": {
+      "openness": "Moderate",
+      "conscientiousness": "High",
+      "extraversion": "Moderate",
+      "agreeableness": "High",
+      "neuroticism": "Low"
+    },
+    "values_and_beliefs": {
+      "environmental_concern": 4,
+      "importance_of_sustainability": "Very important",
+      "social_responsibility": "Believes in educating the younger generation and preserving cultural values",
+      "political_orientation": "Conservative",
+      "cultural_traditions_importance": "Extremely important",
+      "value_priorities": ["Family", "Community", "Health", "Personal growth", "Career"]
+    },
+    "behavioral_patterns": {
+      "daily_routine": "Volunteers at the local church, spends time with grandchildren, gardening",
+      "decision_making_style": "Considers past experiences and seeks advice from trusted individuals",
+      "purchasing_habits": "Prefers in-person shopping at local stores",
+      "brand_loyalty": "Very loyal to familiar brands",
+      "adoption_of_new_products": "Slightly willing"
+    },
+    "preferences_and_interests": {
+      "hobbies": ["Reading", "Cooking/Baking", "Gardening", "Arts and crafts"],
+      "media_consumption": ["Television", "Radio", "Newspapers"],
+      "favorite_social_media": ["Facebook"],
+      "travel_frequency": "Once every few years",
+      "cuisine_preferences": ["Maltese", "Italian", "Mediterranean"]
+    },
+    "emotional_responses": {
+      "stress_response": ["Remains calm", "Engages in prayer and meditation"],
+      "conflict_resolution": "Seeks to understand and find peaceful solutions",
+      "emotional_expression": "Very comfortable",
+      "recent_positive_experience": "Hosted a family reunion that brought together relatives from abroad"
+    },
+    "communication_style": {
+      "preferred_channels": ["Face-to-face", "Phone calls"],
+      "information_preference": ["Detailed explanations", "Printed materials"],
+      "languages": ["Maltese", "English"],
+      "public_speaking_confidence": "Moderately confident"
+    },
+    "consumer_behavior": {
+      "shopping_preferences": ["Local markets", "Independent stores", "Supermarkets"],
+      "purchase_factors": {
+        "price": 3,
+        "quality": 5,
+        "brand_reputation": 5,
+        "recommendations": 4,
+        "advertising": 1,
+        "convenience": 3,
+        "sustainability": 4,
+        "customer_service": 5
       },
-      "emotional_responses": {
-        "stress_response": ["Remains calm and focused", "Engages in stress-relief activities like exercise"],
-        "conflict_resolution": "Seeks a compromise",
-        "emotional_expression": "Somewhat comfortable",
-        "recent_positive_experience": "Organized a surprise birthday party for a friend"
+      "online_shopping_frequency": "Never",
+      "use_of_reviews": "Rarely",
+      "impulse_buying": "Never"
+    },
+    "technology_usage": {
+      "devices_owned": ["Basic mobile phone", "Tablet"],
+      "internet_usage_hours": "1-2 hours",
+      "adoption_of_technology": "Late majority",
+      "primary_online_activities": ["Video calls with family", "Reading news"]
+    },
+    "additional_insights": {
+      "exceptional_experience": "Received personalized service from a local shop that remembered her preferences",
+      "improvement_suggestions": "Businesses should offer more personal touches and face-to-face interactions",
+      "future_trends": "Hope to see a resurgence in community-focused events and traditions"
+    },
+    "image": "images/Maria-Falzon.png"
+  },
+  {
+    "id": "persona_freelance_graphic_designer_malta",
+    "name": "Lara Vella",
+    "age": 28,
+    "title": "Creative Freelance Graphic Designer",
+    "gender": "Female",
+    "location": "Northern District, Malta",
+    "marital_status": "In a domestic partnership",
+    "education": "Bachelor's degree in Fine Arts",
+    "occupation": "Freelance Graphic Designer",
+    "income": "€20,000 - €29,999",
+    "ethnicity": "Maltese",
+    "religion": "Prefer not to say",
+    "description": "Lara is a creative professional who values artistic expression, flexibility, and continuous learning. She is environmentally conscious and tech-savvy.",
+    "personality_traits": {
+      "openness": "High",
+      "conscientiousness": "Moderate",
+      "extraversion": "Moderate",
+      "agreeableness": "Moderate",
+      "neuroticism": "Moderate"
+    },
+    "values_and_beliefs": {
+      "environmental_concern": 5,
+      "importance_of_sustainability": "Extremely important",
+      "social_responsibility": "Supports environmental causes and ethical consumerism",
+      "political_orientation": "Liberal",
+      "cultural_traditions_importance": "Moderately important",
+      "value_priorities": ["Personal growth", "Career", "Health", "Community", "Family"]
+    },
+    "behavioral_patterns": {
+      "daily_routine": "Works on freelance projects, attends workshops, practices yoga",
+      "decision_making_style": "Relies on intuition and creativity",
+      "purchasing_habits": "Prefers sustainable and ethically made products",
+      "brand_loyalty": "Loyal to brands that align with her values and aesthetics",
+      "adoption_of_new_products": "Very willing"
+    },
+    "preferences_and_interests": {
+      "hobbies": ["Arts and crafts", "Yoga", "Traveling", "Photography"],
+      "media_consumption": ["Blogs", "Social media platforms", "Podcasts"],
+      "favorite_social_media": ["Instagram", "Pinterest", "Behance"],
+      "travel_frequency": "Multiple times a year",
+      "cuisine_preferences": ["Vegetarian/Vegan", "Mediterranean", "Asian"]
+    },
+    "emotional_responses": {
+      "stress_response": ["Engages in meditation and yoga", "Feels anxious but manages through creative outlets"],
+      "conflict_resolution": "Prefers open communication and creative solutions",
+      "emotional_expression": "Very comfortable",
+      "recent_positive_experience": "Had her artwork featured in a local gallery"
+    },
+    "communication_style": {
+      "preferred_channels": ["Email", "Social media messaging", "Video conferencing"],
+      "information_preference": ["Visual representations", "Interactive discussions"],
+      "languages": ["Maltese", "English", "Italian"],
+      "public_speaking_confidence": "Moderately confident"
+    },
+    "consumer_behavior": {
+      "shopping_preferences": ["Online retailers", "Independent stores", "Local markets"],
+      "purchase_factors": {
+        "price": 3,
+        "quality": 5,
+        "brand_reputation": 4,
+        "recommendations": 4,
+        "advertising": 3,
+        "convenience": 4,
+        "sustainability": 5,
+        "customer_service": 4
       },
-      "communication_style": {
-        "preferred_channels": ["Face-to-face", "Phone calls", "Text messaging", "Email"],
-        "information_preference": ["Detailed explanations", "Visual representations"],
-        "languages": ["Maltese", "English", "Italian"],
-        "public_speaking_confidence": "Moderately confident"
-      },
-      "consumer_behavior": {
-        "shopping_preferences": ["Online retailers", "Independent stores", "Shopping malls"],
-        "purchase_factors": {
-          "price": 4,
-          "quality": 5,
-          "brand_reputation": 4,
-          "recommendations": 3,
-          "advertising": 2,
-          "convenience": 5,
-          "sustainability": 3,
-          "customer_service": 4
-        },
-        "online_shopping_frequency": "Frequently",
-        "use_of_reviews": "Always",
-        "impulse_buying": "Sometimes"
-      },
-      "technology_usage": {
-        "devices_owned": ["Smartphone", "Laptop", "Smartwatch"],
-        "internet_usage_hours": "4-6 hours",
-        "adoption_of_technology": "Early adopter",
-        "primary_online_activities": ["Work or study", "Entertainment", "Social networking", "News and information"]
-      },
-      "additional_insights": {
-        "exceptional_experience": "Purchased wireless headphones with outstanding quality and customer service",
-        "improvement_suggestions": "Better online shopping experiences, faster delivery, localized support, focus on quality and competitive prices",
-        "future_trends": "Advancements in technology like AI and smart home devices; increased importance of sustainability"
-      },
-      "image": "images/Matthew-Borg.png" 
-    }
-  ]
-  
+      "online_shopping_frequency": "Frequently",
+      "use_of_reviews": "Often",
+      "impulse_buying": "Sometimes"
+    },
+    "technology_usage": {
+      "devices_owned": ["Smartphone", "Laptop", "Tablet"],
+      "internet_usage_hours": "7-9 hours",
+      "adoption_of_technology": "Early adopter",
+      "primary_online_activities": ["Work or study", "Social networking", "Streaming music", "Online shopping"]
+    },
+    "additional_insights": {
+      "exceptional_experience": "Discovered a brand that uses recycled materials and offers plant-based products",
+      "improvement_suggestions": "Businesses should focus more on sustainability and unique artistic designs",
+      "future_trends": "Growth in sustainable fashion and eco-friendly products"
+    },
+    "image": "images/Lara-Vella.png"
+  }
+]

@@ -46,7 +46,7 @@ def generate_digital_twin_feedback(persona_description, testing_material):
     try:
         # Generate feedback
         response = client.chat.completions.create(
-            model="gpt-4",  # Use "gpt-4" if you have access; else use "gpt-3.5-turbo"
+            model="gpt-4o",  # Use "gpt-4" if you have access; else use "gpt-3.5-turbo"
             messages=[
                 {"role": "system", "content": "You are a customer digital twin providing realistic feedback."},
                 {"role": "user", "content": prompt}
@@ -54,7 +54,7 @@ def generate_digital_twin_feedback(persona_description, testing_material):
             max_tokens=600,
             temperature=0.7,
         )
-        feedback = response['choices'][0]['message']['content'].strip()
+        feedback = response.choices[0].message.content.strip()
         
         # Perform sentiment analysis on the feedback
         sentiment_prompt = (
@@ -72,7 +72,7 @@ def generate_digital_twin_feedback(persona_description, testing_material):
             max_tokens=50,
             temperature=0,
         )
-        sentiment_content = sentiment_response['choices'][0]['message']['content'].strip()
+        sentiment_content = sentiment_response.choices[0].message.content.strip()
         sentiment_data = json.loads(sentiment_content)
         
         return feedback, sentiment_data
@@ -314,7 +314,7 @@ if st.sidebar.button("Generate Feedback", key="generate"):
                 max_tokens=300,
                 temperature=0.7,
             )
-            overall_analysis = analysis_response['choices'][0]['message']['content'].strip()
+            overall_analysis = analysis_response.choices[0].message.content.strip()
             st.markdown(f"<div class='feedback-box'>{overall_analysis}</div>", unsafe_allow_html=True)
         except Exception as e:
             st.error(f"An error occurred during overall analysis: {str(e)}")
