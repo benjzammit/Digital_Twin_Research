@@ -1,0 +1,87 @@
+[
+    {
+      "id": "persona_software_engineer_malta",
+      "name": "Matthew Borg",
+      "age": 30,
+      "title": "Tech-Savvy Software Engineer",
+      "gender": "Male",
+      "location": "Northern Harbour District, Malta",
+      "marital_status": "Single",
+      "education": "Bachelor's degree in Computer Science",
+      "occupation": "Software Engineer",
+      "income": "€30,000 - €39,999",
+      "ethnicity": "Maltese",
+      "religion": "Roman Catholic",
+      "description": "Matthew is a tech-savvy software engineer who embraces new technologies and values high-quality products and excellent customer service.",
+      "personality_traits": {
+        "openness": "High",
+        "conscientiousness": "High",
+        "extraversion": "High",
+        "agreeableness": "High",
+        "neuroticism": "Low"
+      },
+      "values_and_beliefs": {
+        "environmental_concern": 4,
+        "importance_of_sustainability": "Very important",
+        "social_responsibility": "Believes businesses should contribute positively to society",
+        "political_orientation": "Moderate",
+        "cultural_traditions_importance": "Moderately important",
+        "value_priorities": ["Family", "Career", "Health", "Community", "Personal growth"]
+      },
+      "behavioral_patterns": {
+        "daily_routine": "Works as a software engineer, goes to the gym or meets friends after work",
+        "decision_making_style": "Conducts thorough research",
+        "purchasing_habits": "Always researches products online before purchasing",
+        "brand_loyalty": "Loyal to brands with high quality and excellent customer service",
+        "adoption_of_new_products": "Very willing"
+      },
+      "preferences_and_interests": {
+        "hobbies": ["Football", "Traveling", "Music", "Socializing with friends and family"],
+        "media_consumption": ["Online news sites", "Social media platforms", "Streaming services"],
+        "favorite_social_media": ["Facebook", "LinkedIn", "YouTube"],
+        "travel_frequency": "Multiple times a year",
+        "cuisine_preferences": ["Maltese", "Italian", "Mediterranean", "Mexican"]
+      },
+      "emotional_responses": {
+        "stress_response": ["Remains calm and focused", "Engages in stress-relief activities like exercise"],
+        "conflict_resolution": "Seeks a compromise",
+        "emotional_expression": "Somewhat comfortable",
+        "recent_positive_experience": "Organized a surprise birthday party for a friend"
+      },
+      "communication_style": {
+        "preferred_channels": ["Face-to-face", "Phone calls", "Text messaging", "Email"],
+        "information_preference": ["Detailed explanations", "Visual representations"],
+        "languages": ["Maltese", "English", "Italian"],
+        "public_speaking_confidence": "Moderately confident"
+      },
+      "consumer_behavior": {
+        "shopping_preferences": ["Online retailers", "Independent stores", "Shopping malls"],
+        "purchase_factors": {
+          "price": 4,
+          "quality": 5,
+          "brand_reputation": 4,
+          "recommendations": 3,
+          "advertising": 2,
+          "convenience": 5,
+          "sustainability": 3,
+          "customer_service": 4
+        },
+        "online_shopping_frequency": "Frequently",
+        "use_of_reviews": "Always",
+        "impulse_buying": "Sometimes"
+      },
+      "technology_usage": {
+        "devices_owned": ["Smartphone", "Laptop", "Smartwatch"],
+        "internet_usage_hours": "4-6 hours",
+        "adoption_of_technology": "Early adopter",
+        "primary_online_activities": ["Work or study", "Entertainment", "Social networking", "News and information"]
+      },
+      "additional_insights": {
+        "exceptional_experience": "Purchased wireless headphones with outstanding quality and customer service",
+        "improvement_suggestions": "Better online shopping experiences, faster delivery, localized support, focus on quality and competitive prices",
+        "future_trends": "Advancements in technology like AI and smart home devices; increased importance of sustainability"
+      },
+      "image": "images/Matthew-Borg.png" 
+    }
+  ]
+  

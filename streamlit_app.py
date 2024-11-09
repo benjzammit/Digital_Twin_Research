@@ -4,30 +4,57 @@ from io import BytesIO
 from PIL import Image
 from openai import OpenAI
 import json
+import os
 
 # Load OpenAI API key from Streamlit secrets
 client = OpenAI(
-    api_key= st.secrets["api_keys"]["OPENAI_API_KEY"]
-    )
+    api_key=st.secrets["api_keys"]["OPENAI_API_KEY"]
+)
 
+
+# Load personas from JSON file
+def load_personas():
+    with open('personas.json', 'r') as f:
+        personas_data = json.load(f)
+    return personas_data
+
+personas_data = load_personas()
+
+# Function to format persona sections
+def format_persona_section(section_title, section_data):
+    formatted_section = f"{section_title}:\n"
+    for key, value in section_data.items():
+        if isinstance(value, dict):
+            formatted_section += f"  {key}:\n"
+            for sub_key, sub_value in value.items():
+                formatted_section += f"    {sub_key}: {sub_value}\n"
+        elif isinstance(value, list):
+            formatted_section += f"  {key}: {', '.join(map(str, value))}\n"
+        else:
+            formatted_section += f"  {key}: {value}\n"
+    return formatted_section + "\n"
 
 # Helper function to generate feedback and perform sentiment analysis
-def generate_digital_twin_feedback(persona, testing_material):
-    prompt = f"You are a digital twin of a real customer persona: {persona}. Provide feedback on the following material: {testing_material}."
-    # Use client.chat.completions.create with model="gpt-4o"
-
+def generate_digital_twin_feedback(persona_description, testing_material):
+    # Construct the prompt
+    prompt = (
+        f"You are a digital twin of the following customer persona:\n\n"
+        f"{persona_description}\n"
+        f"Provide detailed feedback on the following material:\n\n"
+        f"{testing_material}"
+    )
     try:
         # Generate feedback
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4",  # Use "gpt-4" if you have access; else use "gpt-3.5-turbo"
             messages=[
                 {"role": "system", "content": "You are a customer digital twin providing realistic feedback."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=200,
+            max_tokens=600,
             temperature=0.7,
         )
-        feedback = response.choices[0].message.content.strip()
+        feedback = response['choices'][0]['message']['content'].strip()
         
         # Perform sentiment analysis on the feedback
         sentiment_prompt = (
@@ -45,7 +72,7 @@ def generate_digital_twin_feedback(persona, testing_material):
             max_tokens=50,
             temperature=0,
         )
-        sentiment_content = sentiment_response.choices[0].message.content.strip()
+        sentiment_content = sentiment_response['choices'][0]['message']['content'].strip()
         sentiment_data = json.loads(sentiment_content)
         
         return feedback, sentiment_data
@@ -56,6 +83,7 @@ def generate_digital_twin_feedback(persona, testing_material):
 # Custom CSS for modern styling
 st.markdown("""
     <style>
+        /* Add your custom CSS styles here */
         /* Brand Colors and Fonts */
         :root {
             --primary-color: #4A90E2; /* Reflective brand blue */
@@ -84,11 +112,6 @@ st.markdown("""
             font-size: 1.2em;
             font-weight: 400;
             margin-bottom: 30px;
-        }
-
-        /* Sidebar Header */
-        .sidebar-section {
-            margin-top: 20px;
         }
 
         /* Feedback Boxes */
@@ -122,27 +145,16 @@ st.markdown("""
             color: var(--negative-color);
         }
 
-        /* Button Styling */
-        .stButton>button {
-            width: 100%; 
-            border-radius: 8px;
-            padding: 10px 0;
-            background-color: var(--accent-color);
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        /* Sidebar Persona Details */
+        .persona-details {
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
-
-        /* Button Hover Effect */
-        .stButton>button:hover {
-            background-color: #e68920;
+        .persona-details h4 {
+            margin-bottom: 5px;
         }
-
-        /* Download Button */
-        .download-button {
-            margin-top: 20px;
+        .persona-details p {
+            margin: 0;
         }
 
         /* Footer */
@@ -165,7 +177,7 @@ st.markdown("---")
 
 # Sidebar Input Section for Testing Material
 st.sidebar.header("💡 Testing Material")
-testing_material = st.sidebar.text_area("Describe or upload what you want feedback on:", height=150, placeholder="Enter a concept, image description, or idea...")
+testing_material = st.sidebar.text_area("Describe what you want feedback on:", height=150, placeholder="Enter a concept, image description, or idea...")
 
 # Sidebar for Creative Uploads
 st.sidebar.header("🎨 Upload Creative (Optional)")
@@ -179,30 +191,40 @@ if creative:
 
 # Sidebar for Digital Twin Selection
 st.sidebar.header("👥 Select Digital Twin Personas")
-personas = st.sidebar.multiselect(
+
+# Create a dictionary to map persona titles to their data
+personas_dict = {persona['title']: persona for persona in personas_data}
+
+# List of persona titles for selection
+personas_list = [persona['title'] for persona in personas_data]
+
+personas_selected = st.sidebar.multiselect(
     "Choose personas for feedback",
-    ["Tech-Savvy Millennial", "Eco-Conscious Consumer", "Health Enthusiast", "Frequent Traveler", "Parent with Young Kids"],
-    default=["Tech-Savvy Millennial"]
+    personas_list,
+    default=[personas_list[0]]  # Default to the first persona
 )
 
-# Main Section - Display the Testing Material or Creative Asset if uploaded
-st.markdown("## 👁️ Testing Material Preview")
-if creative:
-    st.image(creative, caption="Uploaded Creative", use_column_width=True)
-if testing_material:
-    st.markdown(f"**Testing Material Description:** {testing_material}")
-elif not creative:
-    st.info("Upload an image or describe your concept to get started.")
+# Sidebar - Persona Descriptions
+st.sidebar.markdown("### Persona Details")
+for title in personas_selected:
+    persona = personas_dict[title]
+    st.sidebar.markdown(f"**{persona['name']}, {persona['age']}**")
+    st.sidebar.markdown(f"*{persona['occupation']}*")
+    st.sidebar.markdown(f"*{persona['description']}*")
+    if persona.get('image'):
+        if os.path.exists(persona['image']):
+            st.sidebar.image(persona['image'], width=100)
+        else:
+            st.sidebar.write("Image not found.")
 
-# Generate Feedback Button
-st.markdown("### 💡 Generate Feedback from Digital Twins")
-if st.button("Generate Feedback", key="generate"):
+# Generate Feedback Button in Sidebar
+if st.sidebar.button("Generate Feedback", key="generate"):
     if not testing_material and not creative:
         st.error("Please enter or upload testing material to receive feedback.")
-    elif not personas:
+    elif not personas_selected:
         st.error("Please select at least one digital twin persona to generate feedback.")
     else:
-        st.markdown("### 📋 Feedback Summary")
+        st.markdown("## 📋 Feedback Summary")
         
         # Construct the testing material
         if testing_material and creative:
@@ -217,47 +239,116 @@ if st.button("Generate Feedback", key="generate"):
         # Initialize feedback dictionary
         st.session_state['feedback_dict'] = {}
 
-        # Loop through each persona and display feedback
-        for persona in personas:
-            st.markdown(f"#### Feedback from {persona}")
-            with st.spinner(f"Generating feedback from {persona}..."):
-                feedback, sentiment_data = generate_digital_twin_feedback(persona, material_for_feedback)
+        # Collect feedback from all personas
+        all_feedbacks = []
+        for title in personas_selected:
+            persona = personas_dict[title]
+            # Create a detailed description
+            # Basic information
+            persona_description = (
+                f"Name: {persona['name']}\n"
+                f"Age: {persona['age']}\n"
+                f"Gender: {persona['gender']}\n"
+                f"Location: {persona['location']}\n"
+                f"Marital Status: {persona['marital_status']}\n"
+                f"Education: {persona['education']}\n"
+                f"Occupation: {persona['occupation']}\n"
+                f"Income: {persona['income']}\n"
+                f"Ethnicity: {persona['ethnicity']}\n"
+                f"Religion: {persona['religion']}\n\n"
+            )
+            
+            # Sections to include
+            sections = [
+                ('Personality Traits', persona['personality_traits']),
+                ('Values and Beliefs', persona['values_and_beliefs']),
+                ('Behavioral Patterns', persona['behavioral_patterns']),
+                ('Preferences and Interests', persona['preferences_and_interests']),
+                ('Emotional Responses', persona['emotional_responses']),
+                ('Communication Style', persona['communication_style']),
+                ('Consumer Behavior', persona['consumer_behavior']),
+                ('Technology Usage', persona['technology_usage']),
+                ('Additional Insights', persona['additional_insights'])
+            ]
+            
+            for section_title, section_data in sections:
+                persona_description += format_persona_section(section_title, section_data)
+            
+            # Limit the total tokens in the prompt to avoid exceeding the model's context window
+            # Adjust the max_tokens parameter and consider truncating the persona_description if necessary
+            with st.spinner(f"Generating feedback from {persona['name']}..."):
+                feedback, sentiment_data = generate_digital_twin_feedback(persona_description, material_for_feedback)
                 if sentiment_data:
                     sentiment = sentiment_data.get("sentiment", "Neutral")
                     confidence = sentiment_data.get("confidence", "N/A")
                     
-                    # Determine sentiment class for styling
-                    sentiment_class = "neutral"
-                    if sentiment.lower() == "positive":
-                        sentiment_class = "positive"
-                    elif sentiment.lower() == "negative":
-                        sentiment_class = "negative"
-                    
-                    sentiment_label = f"Sentiment: <span class='sentiment-label {sentiment_class}'>{sentiment} ({confidence})</span>"
-                    st.markdown(sentiment_label, unsafe_allow_html=True)
-                    st.markdown(f"<div class='feedback-box'>{feedback}</div>", unsafe_allow_html=True)
-                    st.session_state['feedback_dict'][persona] = {
+                    st.session_state['feedback_dict'][title] = {
                         "feedback": feedback,
                         "sentiment": sentiment,
                         "confidence": confidence
                     }
+                    all_feedbacks.append(feedback)
                 else:
-                    st.markdown(f"<div class='feedback-box'>{feedback}</div>", unsafe_allow_html=True)
-                    st.session_state['feedback_dict'][persona] = {
+                    st.session_state['feedback_dict'][title] = {
                         "feedback": feedback,
                         "sentiment": "Error",
                         "confidence": "N/A"
                     }
+                    all_feedbacks.append(feedback)
+
+        # Analyze all feedbacks to find common trends
+        st.markdown("### 📊 Overall Analysis")
+        combined_feedback = "\n\n".join(all_feedbacks)
+        try:
+            analysis_prompt = (
+                "Analyze the following feedbacks from different personas and summarize the common trends, themes, "
+                "and overall sentiment. Provide actionable insights.\n\nFeedbacks:\n"
+                f"{combined_feedback}"
+            )
+            analysis_response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are an analysis assistant that provides summaries and insights."},
+                    {"role": "user", "content": analysis_prompt}
+                ],
+                max_tokens=300,
+                temperature=0.7,
+            )
+            overall_analysis = analysis_response['choices'][0]['message']['content'].strip()
+            st.markdown(f"<div class='feedback-box'>{overall_analysis}</div>", unsafe_allow_html=True)
+        except Exception as e:
+            st.error(f"An error occurred during overall analysis: {str(e)}")
+
+        # Display individual feedbacks
+        st.markdown("### 📝 Individual Feedback")
+        for title in personas_selected:
+            persona = personas_dict[title]
+            st.markdown(f"#### Feedback from {persona['name']}")
+            data = st.session_state['feedback_dict'][title]
+            feedback = data['feedback']
+            sentiment = data['sentiment']
+            confidence = data['confidence']
+            
+            # Determine sentiment class for styling
+            sentiment_class = "neutral"
+            if sentiment.lower() == "positive":
+                sentiment_class = "positive"
+            elif sentiment.lower() == "negative":
+                sentiment_class = "negative"
+            
+            sentiment_label = f"Sentiment: <span class='sentiment-label {sentiment_class}'>{sentiment} ({confidence})</span>"
+            st.markdown(sentiment_label, unsafe_allow_html=True)
+            st.markdown(f"<div class='feedback-box'>{feedback}</div>", unsafe_allow_html=True)
 
         st.success("Feedback generated successfully!")
 
         # Download option for feedback
         if st.session_state['feedback_dict']:
             feedback_text = "\n\n".join([
-                f"Feedback from {persona}:\n"
+                f"Feedback from {persona['name']} ({title}):\n"
                 f"Sentiment: {data['sentiment']} ({data['confidence']})\n"
                 f"{data['feedback']}"
-                for persona, data in st.session_state['feedback_dict'].items()
+                for title, data in st.session_state['feedback_dict'].items()
             ])
             feedback_file = BytesIO()
             feedback_file.write(feedback_text.encode())
@@ -269,9 +360,14 @@ if st.button("Generate Feedback", key="generate"):
                 mime="text/plain",
             )
 
-# Optional Future Feature - Chat to Persona Placeholder
-st.markdown("## 🗨️ Chat to Digital Twin (Coming Soon)")
-st.text("This section will allow real-time conversation with digital twin personas.")
+# Main Section - Display the Testing Material or Creative Asset if uploaded
+st.markdown("## 👁️ Testing Material Preview")
+if creative:
+    st.image(creative, caption="Uploaded Creative", use_column_width=True)
+if testing_material:
+    st.markdown(f"**Testing Material Description:** {testing_material}")
+elif not creative:
+    st.info("Upload an image or describe your concept to get started.")
 
 # Footer
 st.markdown("---")
